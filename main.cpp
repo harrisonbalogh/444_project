@@ -8,7 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#include <cstring>
+#include <string>
 using namespace std;
 
 // Functions Prototypes
