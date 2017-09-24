@@ -1,1 +1,15 @@
-if ( 5 <= dropRate ) { return 5 ; }
+//if ( 5 <= dropRate ) {
+//    return 5;
+//}
+
+float thisIsMyInt = 23.5;
+
+print ( thisIsMyInt );
+
+while ( thisIsMyInt < 0 ) {
+
+    thisIsMyInt = thisIsMyInt - 1;
+
+    print ( "Reducing by one." ); // print ( thisIsMyInt );
+
+}
