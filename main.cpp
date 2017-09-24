@@ -39,7 +39,7 @@ string readFile() {
 
     if (fileIn.is_open()) {
         while ( getline(fileIn, line)) {
-            buildString += line;
+            buildString += line + '\n';
         }
     }
     else {
@@ -62,16 +62,23 @@ void parseTokens(string input) {
             cout << "(Tok: \t" << tokenID;
             cout << "\tline= " << line_num; //line_num needs to increment with each following line, will fix later
 
-            if (tokenID == 0) {
+            if (tokenID == 0)
                 cout << "\tstr= \"" << buildToken << "\")";
-            //if(tokenID == 5) remove quotes from str field, print buildToken
-            //if(tokenID == 3 || tokenID == 4) cout << "int= " <<
-            }else{
+            else if (tokenID == 5)
+            	cout << "\tstr= " << buildToken << ")";
+            else if (tokenID == 3)
+            	cout << "\tstr= \"" << buildToken << "\" \t" << "int= " << buildToken << ")";
+            	// 2nd buildToken should be converted to int
+            else if (tokenID == 4)
+            	cout << "\tstr= \"" << buildToken << "\" \t" << "float= " << buildToken << ")";
+            	// 2nd buildToken should be converted to int
+            else
                 cout << "\tstr= "  << REGEX_DESCRIPTOR_GRAMMAR[tokenID] << ")";
-            }
 
             // Flush builder
             buildToken = "";
+	    if(input[c] == '\n')
+            	line_num++;
             cout << endl;
         } else {
             buildToken += input[c];
@@ -83,13 +90,18 @@ void parseTokens(string input) {
         cout << "(Tok: \t" << tokenID;
         cout << "\tline= " << line_num;
 
-        if (tokenID == 0) {
+        if (tokenID == 0)
             cout << "\tstr= \"" << buildToken << "\")";
-            //if(tokenID == 5) remove quotes from str field, print buildToken
-            //if(tokenID == 3 || tokenID == 4) cout << "int= " <<
-        } else {
+        else if (tokenID == 5)
+        	cout << "\tstr= " << buildToken << ")";
+        else if (tokenID == 3)
+        	cout << "\tstr= \"" << buildToken << "\" \t" << "int= " << buildToken << ")";
+        	// 2nd buildToken should be converted to int
+        else if (tokenID == 4)
+        	cout << "\tstr= \"" << buildToken << "\" \t" << "float= " << buildToken << ")";
+        	// 2nd buildToken should be converted to int
+        else
             cout << "\tstr= " << REGEX_DESCRIPTOR_GRAMMAR[tokenID] << ")";
-        }
     }
     cout << endl;
 }
