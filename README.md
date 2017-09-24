@@ -1,7 +1,6 @@
+# CECS 444 Project: A2 Lexer
 //@author: Harrison Balogh, Charlie Buth, Mark Tan
 //Files necessary to run program: main.cpp, in.txt
-
-# 444_project
 
 # Features:
     The desired text file is specified in the code itself, so if one were to test a different file, the appropriate lines of code must be changed to reflect that. Most importantly, the name of the file path must change depending on what file is desired for use and what operating system is chosen for running the program.
