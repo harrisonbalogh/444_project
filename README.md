@@ -1,12 +1,12 @@
 # CECS 444 Project: A2 Lexer
-//@author: Harrison Balogh, Charlie Buth, Mark Tan
+//@author: Harrison Balogh, Bunly Buth, Mark Tan
 //Files necessary to run program: main.cpp, in.txt
 
 # Features:
     The desired text file is specified in the code itself, so if one were to test a different file, the appropriate lines of code must be changed to reflect that. Most importantly, the name of the file path must change depending on what file is desired for use and what operating system is chosen for running the program.
 
 # Functions & Methods:
-    string readFile()                   //@author: Harrison Balogh, Charlie Buth
+    string readFile()                   //@author: Harrison Balogh, Bunly Buth
     void parseTokens(string input)      //@author: Harrison Balogh, Mark Tan
     int getTokenID(string word)         //@author: Harrison Balogh
     void loadGrammarMap()               //@author: Mark Tan
