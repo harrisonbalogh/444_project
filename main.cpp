@@ -43,7 +43,10 @@ int main(int argc, const char * argv[]) {
 string readFile() {
     string line;
     string buildString = "";
-    ifstream fileIn ("/Users/harrisonbalogh/Developer/444_project/in.txt");
+    string fileName = "";
+    cout << "Type in the desired file name: ";
+    cin >> fileName;
+    ifstream fileIn (fileName);
     
     if (fileIn.is_open()) {
         while ( getline(fileIn, line)) {
