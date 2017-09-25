@@ -5,7 +5,7 @@
 
 # Description:
     This C++ program reads a txt file that consists of an A2 program and converts each character or string into a token.
-    For each token, it will be displayed on the console with this format: (Tok: <ID#> line= <line> str= "<token>" [int= <int> | float= <float>]?).
+    For each token, it will be displayed on the console with this format: 'character' is [character description].
     In order to assign an ID to each character or string, a map will be used to identify what each part of the program represents.
     This means that all characters can be easily assigned. For example, a comma (',') will have an ID of 6, therefore the two attributes will be incorporated together.
 
