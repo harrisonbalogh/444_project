@@ -102,7 +102,7 @@ void parseTokens(string input) {
                 
                 // Output the delimiter if it isn't whitespace or end line
                 if ( input[c] != ' ' && input[c] != '\n') {
-                    int delimiterID = getTokenID(string({input[c]}));
+                    int delimiterID = getTokenID(string(string(1, input[c])));
                     cout << "'" << input[c] << "' is " << REGEX_GRAMMAR_DESCRIPTOR[delimiterID] << endl;
                 }
                 
@@ -118,7 +118,7 @@ void parseTokens(string input) {
             
             // Output the delimiter if it isn't whitespace or end line
             if ( input[c] != ' ' && input[c] != '\n') {
-                int delimiterID = getTokenID(string({input[c]}));
+                int delimiterID = getTokenID(string(1, input[c]));
                 cout << "'" << input[c] << "' is " << REGEX_GRAMMAR_DESCRIPTOR[delimiterID] << endl;
             }
             
