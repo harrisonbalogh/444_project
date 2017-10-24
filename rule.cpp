@@ -1,7 +1,7 @@
 #include <map>
 #include <string>
 
-void Parsermap();
+void parserMap();
 void loadGrammarMap();
 using namespace std;
 
@@ -11,7 +11,8 @@ map<int, string> Parser_map;
 
 
 class Rule {
-	void Parsermap() {
+	//Map all Parser Rules
+	void parserMap() {
 		Parser_map[] = "BBlock";        //Pgm
 		Parser_map[] = "Vargroup";      //BBlock
 		Parser_map[] = "PPVarlist";     //Vargroup
@@ -46,7 +47,7 @@ class Rule {
 		Parser_map[] = "Stwhile";       //Stmt
 		Parser_map[] = "Stprint";       //Stmt
 		Parser_map[] = "Stasgn";        //Stmt
-		Parser_map[] = "eps";           //E, R, T, Moreexprs, Stmts, Varlist, Vargrop,
+		Parser_map[] = "eps";           //E, R, T, Moreexprs, Stmts, Varlist, Vargroup
 	}
 
 	/// Maps all REGEX grammar rules with their ID numbers.
