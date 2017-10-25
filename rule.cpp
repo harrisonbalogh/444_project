@@ -8,7 +8,7 @@ using namespace std;
 map<int, string> REGEX_GRAMMAR;
 map<int, string> Parser_map;
 
-
+//for map traversal, we start at 1 and not 0
 
 class Rule {
 	//Map all Parser Rules
@@ -46,7 +46,7 @@ class Rule {
 
 	/// Maps all REGEX grammar rules with their ID numbers.
 	void loadGrammarMap() {
-		REGEX_GRAMMER[1] = "i";		//identifier
+		REGEX_GRAMMAR[1] = "i";		//identifier
 		REGEX_GRAMMAR[2] = "prog";	//kprog
 		REGEX_GRAMMAR[3] = "vars";     	//vars
 		REGEX_GRAMMAR[4] = "print";    	//kprint
