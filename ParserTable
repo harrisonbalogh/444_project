@@ -6,6 +6,7 @@ class parserTable () {
 void ParserTable() {
  parser_table[0][1] = 1;
  parser_table[1][21] = 1;
+ parser_table[2][2] = 1;
  parser_table[2][22] = 1;
  parser_table[3][22] = 1;
  parser_table[4][5] = 1;
