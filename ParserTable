@@ -83,15 +83,23 @@ void ParserTable() {
  parser_table[22][6] = 1;
  parser_table[22][7] = 1;
  parser_table[22][22] = 1;
- parser_table[0][0] = 1;
- parser_table[0][0] = 1;
- parser_table[0][0] = 1;
- parser_table[0][0] = 1;
- parser_table[0][0] = 1;
- parser_table[0][0] = 1;
- parser_table[0][0] = 1;
- parser_table[0][0] = 1;
-
-
+ parser_table[23][0] = 1;
+ parser_table[23][5] = 1;
+ parser_table[23][6] = 1;
+ parser_table[23][7] = 1;
+ parser_table[23][22] = 1;
+ parser_table[24][10] = 1;
+ parser_table[24][15] = 1;
+ parser_table[24][16] = 1;
+ parser_table[24][17] = 1;
+ parser_table[24][18] = 1;
+ parser_table[24][19] = 1;
+ parser_table[25][16] = 1;
+ parser_table[26][18] = 1;
+ parser_table[27][11] = 1;
+ parser_table[27][12] = 1;
+ parser_table[28][13] = 1;
+ parser_table[28][14] = 1;
+ parser_table[28][20] = 1;
 }
 };
