@@ -1,9 +1,7 @@
-void paraserTable();
-int ROWS;
-int TABLE
-bool parser_table[ROWS][TABLE];
 class parserTable () {
-void ParserTable() {
+int ROWS, COLS;
+bool parser_table[ROWS][COLS];
+void fill_table() {
  parser_table[0][1] = 1;
  parser_table[1][21] = 1;
  parser_table[2][2] = 1;
