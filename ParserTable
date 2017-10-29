@@ -21,10 +21,10 @@ void fill_table() {
  parser_table[8][0] = 1;
  parser_table[8][3] = 1;
  parser_table[8][4] = 1;
- parser_table[8][8] = 1;
  parser_table[9][0] = 1;
  parser_table[9][3] = 1;
  parser_table[9][4] = 1;
+ parser_table[9][8] = 1;
  parser_table[10][1] = 1;
  parser_table[11][3] = 1;
  parser_table[12][4] = 1;
