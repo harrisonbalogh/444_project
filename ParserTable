@@ -1,4 +1,4 @@
-class parserTable () {
+class parserTable {
 int ROWS, COLS;
 bool parser_table[ROWS][COLS];
 void fill_table() {
