@@ -1,107 +1,139 @@
 #include <iostream>
 using namespace std;
 
-struct Node{
-	char type[10];
+class Node {
+	int id; // unique value
+	char symbol;
 	string data;
-	Node* child;
+	Node *child;
+	int child_count;
+public:
+	Node() { id = 0; symbol = ' '; data = ""; child = NULL; child_count = 0; }
+
+	void set_id(int i) { id = i; }
+
+	void set_children() {
+		child = new Node[4];
+	}
+
+	void set_child(Node* c, int i) {
+		if(child == NULL)
+			child = c;
+		else
+			child[i] = *c;
+		child_count++;
+	}
+
+	void set_symbol(char s) { symbol = s; }
+
+	void set_data(string d) { data = d; }
+
+	void set_child_count(int cc) { child_count = cc; }
+
+	void deallocate_ptr() {
+		delete [] child;
+	}
+
+	int get_id() { return id; }
+
+	Node* get_child() { return child; }
+
+	Node get_one_child(int i) { return child[i]; }
+
+	char get_symbol() { return symbol; }
+
+	string get_data() { return data; }
+
+	int get_child_count() { return child_count; }
 };
 
 /**
- * Checks whether a node has children
- */
-bool has_kids(Node n) {
-	bool result = (nullptr != n.child) ? true : false;
-	return result;
-}
-
-/**
- * Copies data from child to parent node
- */
+* Copies data from child to parent node
+*/
 void copy_guts(Node mum, Node kid) {
-	mum.data = kid.data;
+	mum.set_id(kid.get_id());
+	mum.set_data(kid.get_data());
+	mum.set_symbol(kid.get_symbol());
+	mum.set_child_count(kid.get_child_count() - 1);
+}
+
+
+/**
+ * Hoists a child to a parent that has four child nodes
+ * for BBlock
+ */
+void P2A_hoist_from_four(Node old_p) {
+	Node new_p = *(old_p.get_child() + 0);
+	new_p.set_children();
+	Node* a = old_p.get_child() + 1;
+	Node* b = old_p.get_child() + 2;
+	Node* c = old_p.get_child() + 3;
+	new_p.set_child(a, 0);
+	new_p.set_child(b, 1);
+	new_p.set_child(c, 2);
+	copy_guts(old_p, new_p);
 }
 
 /**
- * P2A rule that covers
- * PGM = KPROG VARGROUP FCNDEFS MAIN
+ * Hoists a child to a parent that has four child nodes
+ * for PPvarlist, Varlist, Stasgn, Stwhile, PPexprs, PPexpr1,
+ * E, R and T
  */
-void P2A_fix1(Node n) {
-	Node kid1 = n.child[1];
-	for(int i = 2; i < (sizeof(n.child) / sizeof(Node)) ; i++)
-		kid1.child[i - 1] = n.child[i];
-	copy_guts(n, kid1);
+void P2A_hoist_from_three(Node old_p) {
+	Node new_p = *(old_p.get_child() + 0);
+	new_p.set_children();
+	Node* a = old_p.get_child() + 1;
+	Node* b = old_p.get_child() + 2;
+	new_p.set_child(a, 0);
+	new_p.set_child(b, 1);
+	copy_guts(old_p, new_p);
 }
 
 /**
- * P2A rule that covers
- * BBlock = brace1 vargroup stmts brace2
+ * Hoists a child to a parent that has four child nodes
+ * for StmtList, MoreStmts, Pgm, Vargroup, Vardecl, Stprint, Exprlist,
+ * Moreexprs, Expr, Rterm and Term
  */
-void P2A_fix3(Node n) {
-	P2A_fix1(n);
-}
-
-/**
- * P2A rule that covers
- * STMTS = STMT STMTS
- */
-void P2A_fix6(Node n) {
-	Node kid1 = n.child[1];
-	Node kid2 = n.child[2];
-	if(has_kids(kid1)) {
-		kid1.child[3] = kid2;
-		copy_guts(n, kid1);
-	}
-}
-
-/**
- * P2A rule that covers
- * STMT = KPRINT ID
- */
-void P2A_fix9(Node n) {
-	Node kid1 = n.child[1];
-	Node kid2 = n.child[2];
-	kid1.child[1] = kid2;
-	copy_guts(n, kid1);
-}
-
-/**
- * P2A rule that covers
- * MDHEADER = KFCN MDID PPARMLIST RETKIND
- */
-void P2A_fix23(Node n) {
-	P2A_fix1(n);
-}
-
-void P2A_term(Node n) {
-
+void P2A_hoist_from_two(Node old_p) {
+	Node new_p = *(old_p.get_child() + 0);
+	new_p.set_children();
+	Node* a = old_p.get_child() + 1;
+	new_p.set_child(a, 0);
+	copy_guts(old_p, new_p);
 }
 
 void P2A_fix(Node n) {
-	int option;
+	int option = 0;
+	if(n.get_data() == "BBlock")
+		option = 1;
+	else if(n.get_data() == "PPvarlist" || n.get_data() == "Varlist" || n.get_data() == "Stasgn" || n.get_data() == "Stwhile" ||
+			n.get_data() == "PPexprs" || n.get_data() == "PPexpr1" || n.get_data() == "E" || n.get_data() == "R" || n.get_data() == "T")
+		option = 2;
+	else if(n.get_data() == "StmtList" || n.get_data() == "MoreStmts" || n.get_data() == "Pgm" || n.get_data() == "Vargroup" ||
+			n.get_data() == "Stprint" || n.get_data() == "Exprlist" || n.get_data() == "Moreexprs" || n.get_data() == "Expr" ||
+			n.get_data() == "Rterm" || n.get_data() == "Term")
+		option = 3;
+
 	switch(option) {
 		case 1:
-			P2A_fix1(n);
+			P2A_hoist_from_four(n);
+			break;
+		case 2:
+			P2A_hoist_from_three(n);
 			break;
 		case 3:
-			P2A_fix3(n);
-			break;
-		case 6:
-			P2A_fix6(n);
-			break;
-		case 9:
-			P2A_fix9(n);
+			P2A_hoist_from_two(n);
 			break;
 		default:
-			P2A_term(n);
+			//P2A_term(n);
 			break;
 	}
 }
 
 void PST2AST(Node n) {
-	if(nullptr == n)
+	if(NULL == n)
 		return;
-	for(int i = 1; i <= 10; ++i)
+	for(int i = 0; i < 4; ++i)
 		PST2AST(n.child[i]);
 	P2A_fix(n);
 	return;
