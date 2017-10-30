@@ -79,6 +79,11 @@ bool top_is_term() {
 	return result;
 }
 
+bool top_is_nonterm () {
+	bool result = 1;
+	return result;
+}
+
 Node reverse(Node rn) {
 	Node r;
 	return r;
@@ -93,75 +98,32 @@ void parse_machine(Node root) {
 	pst.push(root);
 	while(!pst.empty()) {
 		if(top == front)
+		        top_is_term();
 			pst.pop();
 		else {
 			if(top_is_term())
 				cerr << "Error";
 			else {
-			//top_is_term;
-				bool cell = 0;//parser_table[ROWS][COLS];
-				if(!cell)
-					cerr << "Error";
+				if (top_of_nonterm) {
+				cerr << "Error";
 				else {
-					pst.pop();
-					pst.push(reverse(cell.RHS));
+					pst.push();
+					for (int i = 28; i <= 1; i--) {
+					pst.push(root);
+					
 				}
+				
+				}
+				
+		
 			}
 		}
-	}
-	//pst.pop();
-	//for (int i = 22; i <= 1; i--) {
-	//pst.push(root);
+	
 	}
 	print_tree(root);
 }*/
 
 
-/////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-/*
-int ROWS, COLS;
-bool parser_table[ROWS][COLS];
-
-bool top_is_term() {
-	bool result = 0;
-	return result;
-}
-
-Node reverse(Node rn) {
-	Node r;
-	return r;
-}
-
-
-
-void TOS(Node x, vector<string> token) {
-	if (x.peek() = token) {
-	}
-	else {
-		cerr << "Error";
-	}
-}
-
-void parse_machine(Node root) {
-	int top, front;
-	stack<Node> pst;
-	pst.push(root);
-	while (!pst.empty()) {
-		if (top == front) {
-			//TOS(Node x, vector<string> token);
-			pst.pop();
-			}
-		else
-			if () {
-		}
-	}
-	pst.pop();
-	for (int i = 28; i <= 1; i--) {
-		pst.push(root);
-	}
-}
-/*
 
 
 int main() {
