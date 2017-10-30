@@ -104,10 +104,10 @@ void parse_machine(Node root) {
 			if(top_is_term())
 				cerr << "Error";
 			else {
-				if (top_of_nonterm) {
+				if (top_of_nonterm = 0) {
 				cerr << "Error";
 				else {
-					pst.push();
+					pst.pop();
 					for (int i = 28; i <= 1; i--) {
 					pst.push(root);
 					
