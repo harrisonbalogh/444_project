@@ -70,46 +70,51 @@ void print_tree(Node n) {
 // BELOW 3 FUNCTIONS IS FOR BUILDING THE PST, NEED HELP WITH THAT //
 ////////////////////////////////////////////////////////////////////
 
+/*
+int ROWS, COLS;
+bool parser_table[ROWS][COLS];
 
-//int ROWS, COLS;
-//bool parser_table[ROWS][COLS];
+bool top_is_term() {
+	bool result = 0;
+	return result;
+}
 
-//bool top_is_term() {
-//	bool result = 0;
-//	return result;
-//}
+Node reverse(Node rn) {
+	Node r;
+	return r;
+}
 
-//Node reverse(Node rn) {
-//	Node r;
-//	return r;
-//}
 
-///*
-// * Builds and outputs a PST of Node objects
-// */
-//void parse_machine(Node root) {
-//	int top, front;
-//	stack<Node> pst;
-//	pst.push(root);
-//	while(!pst.empty()) {
-//		if(top == front)
-//			pst.pop();
-//		else {
-//			if(top_is_term())
-//				cerr << "Error";
-//			else {
-//				bool cell = 0;//parser_table[ROWS][COLS];
-//				if(!cell)
-//					cerr << "Error";
-//				else {
-//					pst.pop();
-//					//pst.push(reverse(cell.RHS));
-//				}
-//			}
-//		}
-//	}
-//	print_tree(root);
-//}
+//Builds and outputs a PST of Node objects
+
+void parse_machine(Node root) {
+	int top, front;
+	stack<Node> pst;
+	pst.push(root);
+	while(!pst.empty()) {
+		if(top == front)
+			pst.pop();
+		else {
+			if(top_is_term())
+				cerr << "Error";
+			else {
+			//top_is_term;
+				bool cell = 0;//parser_table[ROWS][COLS];
+				if(!cell)
+					cerr << "Error";
+				else {
+					pst.pop();
+					pst.push(reverse(cell.RHS));
+				}
+			}
+		}
+	}
+	//pst.pop();
+	//for (int i = 22; i <= 1; i--) {
+	//pst.push(root);
+	}
+	print_tree(root);
+}*/
 
 int main() {
 	Node n, a, x;
