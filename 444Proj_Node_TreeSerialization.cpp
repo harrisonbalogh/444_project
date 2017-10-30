@@ -116,6 +116,54 @@ void parse_machine(Node root) {
 	print_tree(root);
 }*/
 
+
+/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+/*
+int ROWS, COLS;
+bool parser_table[ROWS][COLS];
+
+bool top_is_term() {
+	bool result = 0;
+	return result;
+}
+
+Node reverse(Node rn) {
+	Node r;
+	return r;
+}
+
+
+
+void TOS(Node x, vector<string> token) {
+	if (x.peek() = token) {
+	}
+	else {
+		cerr << "Error";
+	}
+}
+
+void parse_machine(Node root) {
+	int top, front;
+	stack<Node> pst;
+	pst.push(root);
+	while (!pst.empty()) {
+		if (top == front) {
+			//TOS(Node x, vector<string> token);
+			pst.pop();
+			}
+		else
+			if () {
+		}
+	}
+	pst.pop();
+	for (int i = 28; i <= 1; i--) {
+		pst.push(root);
+	}
+}
+/*
+
+
 int main() {
 	Node n, a, x;
 	n.set_id(1);	n.set_symbol(';');	n.set_data("semi");
