@@ -15,34 +15,41 @@
 #include "rule.hpp"
 
 using namespace std;
+struct Token {
+    string type = " ";
+    string val = " ";
+};
 
 /// This lexical analyzer (or "scanner" or "lexer") transforms a character stream into
 /// a token stream.
 class Lexer {
     
     public:
-    static vector<string> getTokensFromLine(string input) {
+    static vector<Token> getTokensFromLine(string input) {
         
-        vector <string> tokens;
+        vector <Token> tokens;
         
-        string buildToken = "";
+        string wordAssembler = "";
         
         // Iterate through all input characters
         for (int c = 0; c < strlen(input.c_str()); c++) {
             
             // Check if this is a doublequote-braced string
-            if (!buildToken.empty()) {
+            if (!wordAssembler.empty()) {
                 // Check for a started string of text
-                if (buildToken[0] == '\"') {
-                    buildToken += input[c];
+                if (wordAssembler[0] == '\"') {
+                    wordAssembler += input[c];
                     // Check for closing doublequote
                     if (input[c] == '\"' && c != 0) {
                         
                         // Add token
-                        tokens.push_back("(Tok: " + to_string(5) + " str= \"" + buildToken + "\")");
+                        Token commentToken;
+                        commentToken.type = to_string(5);
+                        commentToken.val = wordAssembler;
+                        tokens.push_back(commentToken);
                         
-                        // Flush buildToken
-                        buildToken = "";
+                        // Flush wordAssembler
+                        wordAssembler = "";
                     }
                     continue;
                 }
@@ -51,11 +58,11 @@ class Lexer {
             // Token delimited if whitespace, new line, or semicolon
             if ( isDelimiter( input[c]) ) {
                 
-                // Skip if buildToken is empty
-                if (!buildToken.empty()) {
+                // Skip if wordAssembler is empty
+                if (!wordAssembler.empty()) {
                     
                     // Add token
-                    tokens.push_back(tokenDescriptionForWord(buildToken));
+                    tokens.push_back(tokenDescriptionForWord(wordAssembler));
                     
                 }
                 
@@ -65,26 +72,26 @@ class Lexer {
                 }
                 
                 // Flush builder
-                buildToken = "";
+                wordAssembler = "";
                 
             } else {
                 
                 // Character is not a delimiter but check if its a comment
-                if (buildToken.length() > 0) {
+                if (wordAssembler.length() > 0) {
                     // 2 slashes in a row indicates a comment. Stop reading rest of line.
-                    if (buildToken[buildToken.length()-1] == '/' && input[c] == '/') {
+                    if (wordAssembler[wordAssembler.length()-1] == '/' && input[c] == '/') {
                         // Don't read characters in line after determining it is a comment.
                         return tokens;
                     }
                 }
                 
-                buildToken += input[c]; // Append token to builder string
+                wordAssembler += input[c]; // Append token to builder string
             }
         }
         
-        if (!buildToken.empty()) {
+        if (!wordAssembler.empty()) {
             // Leftover token after for-loop finishes - output it
-            tokens.push_back(tokenDescriptionForWord(buildToken));
+            tokens.push_back(tokenDescriptionForWord(wordAssembler));
         }
         
         return tokens;
@@ -93,14 +100,18 @@ class Lexer {
     private:
     
     /// Looks up the given word and returns its ID in the GRAMMAR table.
-    static string tokenDescriptionForWord(string word) {
+    static Token tokenDescriptionForWord(string word) {
+        
+        Token token;
         
         map<int, string>::const_iterator it;
         // Lookup rule matching word. Only keywords, paired delimiters, punctuation, operators
         for (it = Rule::REGEX_GRAMMAR.begin(); it != Rule::REGEX_GRAMMAR.end(); ++it) {
             
             if (!word.compare(it -> second)) {
-                return "(Tok: " + to_string(it -> first) + " str= \"" + word + "\")";
+                token.type = to_string(it -> first);
+                token.val = word;
+                return token;
             }
             
         }
@@ -122,7 +133,9 @@ class Lexer {
         if (word.length() > 0) {
             // First character indicates if its an ID
             if ((word[0] >= 'A' && word[0] <= 'Z') || (word[0] >= 'a' && word[0] <= 'z') || word[0] == '_') {
-                return "(Tok: " + to_string(2) + " str= \"" + word + "\")";
+                token.type = to_string(2);
+                token.val = word;
+                return token;
             }
         }
         
@@ -169,15 +182,21 @@ class Lexer {
             // Int ID: 3, Float ID: 4
             if (floatAccuracy == -1) {
                 // This is an int (id: 3)
-                return "(Tok: " + to_string(3) + " str= \"" + word + "\" int= " + to_string((int)numberBuilder) + ")";
+                token.type = to_string(3);
+                token.val = to_string((int)numberBuilder);
+                return token;
             } else {
                 // This is a float (id: 4)
-                return "(Tok: " + to_string(3) + " str= \"" + word + "\" float= " + to_string(numberBuilder) + ")";
+                token.type = to_string(4);
+                token.val = to_string(numberBuilder);
+                return token;
             }
         }
         
         // Did not find token ID. (id: 99)
-        return "(Tok: " + to_string(99) + " str= \"" + word + "\")";
+        token.type = to_string(99);
+        token.val = word;
+        return token;
     }
     
     /// Returns true if the given character
@@ -195,3 +214,17 @@ class Lexer {
     }
     
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
