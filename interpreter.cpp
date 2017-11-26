@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 class Node {
@@ -47,27 +48,70 @@ public:
 	int get_child_count() { return child_count; }
 };
 
+class SCTnode{
+	char symtab[10];
+public:
+	SCTnode(Node n) {
+		for(int i = 0; i < 10; ++i) {
+			if(symtab[i] == 0) {
+				add(n.get_symbol(), i);
+				break;
+			}
+		}
+	}
+
+	SCTnode(char c) {
+		for(int i = 0; i < 10; ++i) {
+			if(symtab[i] == 0) {
+				add(c, i);
+				break;
+			}
+		}
+	}
+	void add(char c, int i) {
+		symtab[i] = c;
+	}
+
+	char get_table_cell(int i) {
+		return symtab[i];
+	}
+};
+
+/**
+ * Returns a SCTnode with a symbol from a given node
+ */
 void find_sym(Node ra) {
-
+	SCTnode s = new SCTnode(ra);
+	return s;
 }
 
-void add_use_link(Node rn, Snode rs) {
-
-}
-
+/**
+ * Adds an entry into a symbol table
+ */
 void add_entry(Node arn, Snode rsn) {
-
+	for(int i = 0; i < 10; ++i) {
+		if(rsn[i] == 0) {
+			rsn.add(arn.get_symbol(), i);
+			break;
+		}
+	}
 }
 
+/**
+ * Determines if a node represents a DECL
+ */
 bool is_decl(Node arn) {
-	if(arn.get_data() == 'int' ||
-	   arn.get_data() == 'float' || arn.get_data() == 'string')
+	if(arn.get_data() == 'int' || arn.get_data() == 'float'
+	   || arn.get_data() == 'string')
 		return true;
 	else
 		return false;
 
 }
 
+/**
+ * Determines if a node represents a block
+ */
 bool is_block(Node arn) {
 	if(arn.get_symbol() == '{')
 		return true;
@@ -75,6 +119,9 @@ bool is_block(Node arn) {
 		return false;
 }
 
+/**
+ * Determines if a node represents a use
+ */
 bool is_use(Node arn) {
 	if(arn.get_symbol() == 'i')
 		return true;
@@ -82,14 +129,20 @@ bool is_use(Node arn) {
 		return false;
 }
 
+/**
+ * Determines if a node represents an operation
+ */
 bool is_op(Node arn) {
-	if(arn.get_symbol() == '+' || arn.get_symbol() == '-' ||
-	   arn.get_symbol() == "*" || arn.get_symbol() == '/')
+	if(arn.get_symbol() == '+' || arn.get_symbol() == '-'
+	|| arn.get_symbol() == '*' || arn.get_symbol() == '/')
 		return true;
 	else
 		return false;
 }
 
+/**
+ * Performs the operation specified by the node
+ */
 void do_op(Node arn) {
 	int newSym = 0;
 	Node n1 = arn.get_one_child(0);
@@ -117,51 +170,70 @@ void do_op(Node arn) {
 			newSym = 0;
 }
 
+/**
+ * Converts a use AST node to a SCT node
+ */
 void A2S_use(Node ra, Snode rs) {
-	Snode my_scope = find_sym(ra);
-	add_use_link(ra, my_scope);
+	SCTnode my_scope = find_sym(ra);
 }
 
+/**
+ * Converts a block AST node to a SCT node
+ */
 void A2S_block(Node arn, SCTnode rsn) {
-	SCTnode skid = new SCTnode(rsn); //bilink
-	foreach kid
-		AST2SCT(kid, skid);
+	for(int i = 0; i < 4; ++i)
+		AST2SCT(arn.get_one_child(i), rsn);
 }
 
+/**
+ * Converts a decl AST node to a SCT node
+ */	
 void A2S_decl(Node arn, SCTnode rsn) {
-	Entry ex = add_entry(arn.lkid, rsn);
-	ex.decl = arn;
-	if(is_decl(arn.rkid))
-		A2S_decl(arn.rkid, rsn);
+	add_entry(arn.get_one_child(0), rsn);
+	if(is_decl(arn.get_one_child(1)))
+		A2S_decl(arn.get_one_child(1), rsn);
 }
 
+/**
+ * Runs the AST starting with the given root node
+ */
 void run_AST(Node arn) {
 	if(is_decl(arn)) return;
-	else if (is_block(arn))
-		foreach kid
-			run_AST(kid);
-	else if (is_use(arn))
-		arn,val = arn.sym.box;
+	else if (is_block(arn)) {
+		for(int i = 0; i < 4; i++)
+			run_AST(arn.get_one_child(i));
+	}
+	else if (is_use(arn)) {
+		char c = arn.get_symbol();
+		stringstream c2s;	string s;
+		c2s << c;	c2s >> s;
+		arn.set_data(s);
+	}
 	else if (is_op(arn))
-		do_op(arn);	//perform operation (add values of arn kids)
+		do_op(arn);
 }
 
+/**
+ * Converts AST to a SCT
+ */
 void AST2SCT(Node arn, SCTnode rsn) {
-	if(NULL == arn) return;
+	if(arn.get_symbol() == ' ')
+		return;
 	if(is_block(arn))
 		A2S_block(arn, rsn);
 	else if(is_decl(arn))
-		A2S_decl(arn, rsn);	//add_decl
+		A2S_decl(arn, rsn);
 	else if (is_use(arn))
-		A2S_use(arn);	//add_use
-	else
-		foreach kid
-			AST2SCT(kid, rsn);
+		A2S_use(arn);
+	else {
+		for(int i = 0; i < 4; i++)
+			AST2SCT(arn.get_one_child(i), rsn);
+	}
 	return;
 }
 
 int main() {
-	//example: prog main { int B = ( 2 * 7 ) + 3 ; print ( B ) ; }
+	//example: int B = ( 2 * 7 ) + 3 ;
 	Node a,b,c,d,e,intB,q;
 	intB.set_id(8);	intB.set_symbol('i');	intB.set_data("B");
 	q.set_id(9);	q.set_symbol('=');	a.set_data("equals");
@@ -182,15 +254,6 @@ int main() {
 	b.set_child(j, 1);
 	print_tree(n);
 
-	//look for brace, var decl (int, float, string), ID
-	//linkk i and K nodes to its scope node
-	//put ID into symbol table
-	//each scope node has a symbol table
-
-	//build SCT (using node that opens scope, decl, var)
-	//root will hold global identifiers
-	//SET UP ROOT BEFORE WALKING AST
-	
-	//decl should create new symtab in current scope node
-	//entry links back to AST decl
+	//NEED HELP WITH TRAVERSING AST AFTER BUILDING SCT
+	//ALSO FIX ANY ISSUES YOU SEE
 }
