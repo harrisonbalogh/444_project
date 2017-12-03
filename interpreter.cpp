@@ -77,6 +77,35 @@ public:
 	}
 };
 
+//Not done
+class Snode {
+ 
+private: 
+		map<string, Node> sctMap;
+		Snode kid;
+		Snode parent;
+public: 
+	Snode() {
+		
+	}
+	 Snode(Snode parent) {
+
+	}
+
+	 map<string, Node> getSCTMap() {
+		return sctMap;
+	}
+	void linkParentToChild(Snode child) {
+		this->kid = child;
+	}
+	 Snode getKid() {
+		return kid;
+	}
+	 Snode getParent() {
+		return parent;
+	}
+};
+
 /**
  * Returns a SCTnode with a symbol from a given node
  */
