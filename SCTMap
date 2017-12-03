@@ -1,0 +1,25 @@
+public class sctNode {
+	private Map<String,Node> sctMap;
+	private sctNode  kid;
+	private sctNode  parent;
+	public sctNode (){
+		sctMap = new HashMap<String,Node>();
+	}
+	public SCTnode (SCTnode parent){
+		sctMap = new HashMap<String,Node>();
+		this->parent = parent;
+	}
+
+	public Map<String, Node> getSCTMap(){
+		return sctMap;
+	}
+	public void linkParentToChild(SCTnode  child){
+		this->kid = child;
+	}
+	public sctNode  getKid() {
+		return kid;
+	}
+	public sctNode getParent(){
+		return parent;
+	}
+}
