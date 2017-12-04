@@ -1,5 +1,9 @@
 #include <iostream>
 #include <sstream>
+#include <map>
+#include <string>
+#include <hash_map>
+
 using namespace std;
 
 class Node {
@@ -50,7 +54,13 @@ public:
 
 class SCTnode{
 	char symtab[10];
+	 
+private: 
+		map<string, Node> sctMap;
+		Snode *kid;
+		Snode *parent;
 public:
+	Snode();
 	SCTnode(Node n) {
 		for(int i = 0; i < 10; ++i) {
 			if(symtab[i] == 0) {
@@ -75,17 +85,8 @@ public:
 	char get_table_cell(int i) {
 		return symtab[i];
 	}
-};
-
-//Not done
-class Snode {
- 
-private: 
-		map<string, Node> sctMap;
-		Snode *kid;
-		Snode *parent;
-public: 
-	Snode() {
+		
+		Snode() {
 		sctMap = NEW hashmap<string, Node>();
 	}
 	 Snode(Snode parent) {
@@ -106,6 +107,8 @@ public:
 		return parent;
 	}
 };
+
+
 
 /**
  * Returns a SCTnode with a symbol from a given node
