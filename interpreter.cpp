@@ -86,7 +86,7 @@ private:
 		Snode *parent;
 public: 
 	Snode() {
-		sctMap =  hashmap<string, Node>();
+		sctMap = NEW hashmap<string, Node>();
 	}
 	 Snode(Snode parent) {
 		sctMap = new hashmap<string, Node>();
