@@ -82,14 +82,15 @@ class Snode {
  
 private: 
 		map<string, Node> sctMap;
-		Snode kid;
-		Snode parent;
+		Snode *kid;
+		Snode *parent;
 public: 
 	Snode() {
-		
+		sctMap =  hashmap<string, Node>();
 	}
 	 Snode(Snode parent) {
-
+		sctMap = new hashmap<string, Node>();
+		this->parent = parent;
 	}
 
 	 map<string, Node> getSCTMap() {
